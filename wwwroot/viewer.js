@@ -20,7 +20,7 @@ export function initViewer(container) {
       const config = {
         extensions: ['Autodesk.DocumentBrowser'],
       };
-      const viewer = new Autodesk.Viewing.GuiViewer3D(container, config);
+      const viewer = new Autodesk.Viewing.Viewer3D(container, config);
       viewer.start();
       viewer.setTheme('light-theme');
       resolve(viewer);
