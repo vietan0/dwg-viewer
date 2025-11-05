@@ -1,4 +1,4 @@
-/// import * as Autodesk from "@types/forge-viewer";
+import showInfoModal from './modal.js';
 
 async function getAccessToken(callback) {
   try {
@@ -20,9 +20,50 @@ export function initViewer(container) {
       const config = {
         extensions: ['Autodesk.DocumentBrowser'],
       };
-      const viewer = new Autodesk.Viewing.Viewer3D(container, config);
+      const viewer = new Autodesk.Viewing.GuiViewer3D(container, config);
       viewer.start();
       viewer.setTheme('light-theme');
+
+      viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, () => {
+        const myDbids = viewer.getSelection();
+        for (const id of myDbids) {
+          viewer.getProperties(
+            id,
+            (obj) => {
+              if (obj.name.startsWith('TEM SDD')) {
+                const { properties } = obj;
+                const info = {
+                  name: properties.find((prop) => prop.displayName === 'LK').displayValue,
+                  area: properties.find((prop) => prop.displayName === 'S').displayValue,
+                  mdxd: properties.find((prop) => prop.displayName === '60').displayValue,
+                  minMax: properties.find((prop) => prop.displayName === '4').displayValue,
+                  hs: properties.find((prop) => prop.displayName === 'HS').displayValue,
+                };
+                showInfoModal(info);
+              }
+            },
+            (err) => {
+              console.log(err);
+            },
+          );
+        }
+      });
+
+      viewer.addEventListener(Autodesk.Viewing.EXTENSION_LOADED_EVENT, (e) => {
+        if (e.extensionId === 'Autodesk.Measure') {
+          viewer.unloadExtension('Autodesk.Measure');
+        }
+        if (e.extensionId === 'Autodesk.DocumentBrowser') {
+          viewer.unloadExtension('Autodesk.DocumentBrowser');
+        }
+        if (e.extensionId === 'Autodesk.DefaultTools.NavTools') {
+          const navTools = viewer.toolbar.getControl('navTools');
+          if (navTools) {
+            navTools.removeControl('toolbar-zoomTool');
+            navTools.removeControl('toolbar-cameraSubmenuTool');
+          }
+        }
+      });
       resolve(viewer);
     });
   });

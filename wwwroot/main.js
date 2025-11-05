@@ -1,35 +1,9 @@
-import showInfoModal from './modal.js';
 import { initViewer, loadModel } from './viewer.js';
 
 initViewer(document.getElementById('preview')).then((viewer) => {
   const urn = window.location.hash?.substring(1);
   setupModelSelection(viewer, urn);
   setupModelUpload(viewer);
-
-  viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, () => {
-    const myDbids = viewer.getSelection();
-    for (const id of myDbids) {
-      viewer.getProperties(
-        id,
-        (obj) => {
-          if (obj.name.startsWith('TEM SDD')) {
-            const { properties } = obj;
-            const info = {
-              name: properties.find((prop) => prop.displayName === 'LK').displayValue,
-              area: properties.find((prop) => prop.displayName === 'S').displayValue,
-              mdxd: properties.find((prop) => prop.displayName === '60').displayValue,
-              minMax: properties.find((prop) => prop.displayName === '4').displayValue,
-              hs: properties.find((prop) => prop.displayName === 'HS').displayValue,
-            };
-            showInfoModal(info);
-          }
-        },
-        (err) => {
-          console.log(err);
-        },
-      );
-    }
-  });
 });
 
 async function setupModelSelection(viewer, selectedUrn) {

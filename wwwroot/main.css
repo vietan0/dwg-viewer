@@ -17,6 +17,11 @@ html {
   font-family: sans-serif;
 }
 
+.forge-spinner img {
+  /* biome-ignore lint/complexity/noImportantStyles: <Hide Autodesk logo> */
+  display: none !important;
+}
+
 #header,
 #preview,
 #overlay {
