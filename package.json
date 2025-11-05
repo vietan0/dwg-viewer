@@ -4,7 +4,10 @@
   "description": "Autodesk Platform Services application built by following the Simple Viewer tutorial from https://aps.autodesk.com/tutorials.",
   "scripts": {
     "start": "node server.js",
-    "check": "pnpm exec biome check --write"
+    "dev": "node server.js",
+    "check": "pnpm exec biome check --write",
+    "build:css": "tailwindcss -i ./wwwroot/main.css -o ./wwwroot/output.css",
+    "watch:css": "tailwindcss -i ./wwwroot/main.css -o ./wwwroot/output.css --watch"
   },
   "keywords": [
     "autodesk-platform-services"
@@ -14,12 +17,15 @@
     "@aps_sdk/authentication": "^1.0.0",
     "@aps_sdk/model-derivative": "^1.0.0",
     "@aps_sdk/oss": "^1.0.1",
+    "@tailwindcss/cli": "^4.1.16",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
-    "express-formidable": "^1.2.0"
+    "express-formidable": "^1.2.0",
+    "tailwindcss": "^4.1.16"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.3",
-    "@types/forge-viewer": "^7.48.0"
+    "@types/forge-viewer": "^7.48.0",
+    "daisyui": "^5.4.3"
   }
 }

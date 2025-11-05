@@ -1,4 +1,4 @@
-import openModal from './modal.js';
+import showInfoModal from './modal.js';
 import { initViewer, loadModel } from './viewer.js';
 
 initViewer(document.getElementById('preview')).then((viewer) => {
@@ -21,8 +21,7 @@ initViewer(document.getElementById('preview')).then((viewer) => {
               minMax: properties.find((prop) => prop.displayName === '4').displayValue,
               hs: properties.find((prop) => prop.displayName === 'HS').displayValue,
             };
-            console.log(info);
-            openModal(info);
+            showInfoModal(info);
           }
         },
         (err) => {

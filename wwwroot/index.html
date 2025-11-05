@@ -4,24 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" type="image/x-icon" href="https://cdn.autodesk.io/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="https://bigdatatech.vn/favicon.ico">
     <link
       rel="stylesheet"
       href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.css"
     >
-    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/output.css">
     <title>DWG Viewer</title>
   </head>
-
   <body>
-    <div id="header">
-      <span class="title">DWG Viewer</span>
+    <div id="header" class="px-4 gap-2">
+      <a class="grow font-bold" href="/">DWG Viewer</a>
       <select name="models" id="models"></select>
       <button id="upload" title="Upload New Model">Upload</button>
       <input style="display: none" type="file" id="input">
     </div>
     <div id="preview"></div>
     <div id="overlay"></div>
+    <dialog id="infoModal" class="modal">
+      <div class="modal-box">
+        <form method="dialog">
+          <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <iconify-icon
+              class="text-neutral-500"
+              icon="mdi:close"
+              width="20"
+              noobserver
+            ></iconify-icon>
+          </button>
+        </form>
+        <h3 class="text-xl font-bold">Info</h3>
+        <div id="infoContent" class="space-y-2">
+          <p>
+            <strong>Name:</strong>
+            <span id="info-name"></span>
+          </p>
+          <p>
+            <strong>Area:</strong>
+            <span id="info-area"></span>
+          </p>
+          <p>
+            <strong>MĐXD:</strong>
+            <span id="info-mdxd"></span>
+          </p>
+          <p>
+            <strong>Min/Max:</strong>
+            <span id="info-minmax"></span>
+          </p>
+          <p>
+            <strong>HS:</strong>
+            <span id="info-hs"></span>
+          </p>
+        </div>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button class="cursor-default">Close</button>
+      </form>
+    </dialog>
     <script
       src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.js"
     ></script>
