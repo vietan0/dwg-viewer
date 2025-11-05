@@ -21,7 +21,7 @@
     </div>
     <div id="preview"></div>
     <div id="overlay"></div>
-    <dialog id="infoModal" class="modal">
+    <dialog id="temSddModal" class="modal">
       <div class="modal-box">
         <form method="dialog">
           <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -36,24 +36,52 @@
         <h3 class="text-xl font-bold">Info</h3>
         <div id="infoContent" class="space-y-2">
           <p>
-            <strong>Name:</strong>
-            <span id="info-name"></span>
+            <strong>Tên:</strong>
+            <span class="name"></span>
           </p>
           <p>
-            <strong>Area:</strong>
-            <span id="info-area"></span>
+            <strong>Diện tích:</strong>
+            <span class="area"></span>
           </p>
           <p>
             <strong>MĐXD:</strong>
-            <span id="info-mdxd"></span>
+            <span class="mdxd"></span>
           </p>
           <p>
-            <strong>Min/Max:</strong>
-            <span id="info-minmax"></span>
+            <strong>Tầng cao Min/Max:</strong>
+            <span class="minmax"></span>
           </p>
           <p>
-            <strong>HS:</strong>
-            <span id="info-hs"></span>
+            <strong>Hệ số SDĐ:</strong>
+            <span class="hs"></span>
+          </p>
+        </div>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button class="cursor-default">Close</button>
+      </form>
+    </dialog>
+    <dialog id="sdd2Modal" class="modal">
+      <div class="modal-box">
+        <form method="dialog">
+          <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <iconify-icon
+              class="text-neutral-500"
+              icon="mdi:close"
+              width="20"
+              noobserver
+            ></iconify-icon>
+          </button>
+        </form>
+        <h3 class="text-xl font-bold">Info</h3>
+        <div id="infoContent" class="space-y-2">
+          <p>
+            <strong>Tên:</strong>
+            <span class="name"></span>
+          </p>
+          <p>
+            <strong>Diện tích:</strong>
+            <span class="area"></span>
           </p>
         </div>
       </div>

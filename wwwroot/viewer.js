@@ -1,4 +1,4 @@
-import showInfoModal from './modal.js';
+import { showSdd2Modal, showTemSddModal } from './modal.js';
 
 async function getAccessToken(callback) {
   try {
@@ -39,7 +39,16 @@ export function initViewer(container) {
                   minMax: properties.find((prop) => prop.displayName === '4').displayValue,
                   hs: properties.find((prop) => prop.displayName === 'HS').displayValue,
                 };
-                showInfoModal(info);
+                showTemSddModal(info);
+              }
+
+              if (obj.name.startsWith('SDD2')) {
+                const { properties } = obj;
+                const info = {
+                  name: properties.find((prop) => prop.displayName === 'LK').displayValue,
+                  area: properties.find((prop) => prop.displayName === 'S').displayValue,
+                };
+                showSdd2Modal(info);
               }
             },
             (err) => {
