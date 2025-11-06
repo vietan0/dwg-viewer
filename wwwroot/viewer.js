@@ -31,8 +31,9 @@ export function initViewer(container) {
             id,
             (obj) => {
               if (obj.name.startsWith('TEM SDD')) {
-                const { properties } = obj;
+                const { externalId, properties } = obj;
                 const info = {
+                  externalId,
                   name: properties.find((prop) => prop.displayName === 'LK').displayValue,
                   area: properties.find((prop) => prop.displayName === 'S').displayValue,
                   mdxd: properties.find((prop) => prop.displayName === '60').displayValue,
@@ -43,8 +44,9 @@ export function initViewer(container) {
               }
 
               if (obj.name.startsWith('SDD2')) {
-                const { properties } = obj;
+                const { externalId, properties } = obj;
                 const info = {
+                  externalId,
                   name: properties.find((prop) => prop.displayName === 'LK').displayValue,
                   area: properties.find((prop) => prop.displayName === 'S').displayValue,
                 };
