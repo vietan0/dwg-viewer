@@ -18,7 +18,7 @@ export function initViewer(container) {
   return new Promise((resolve, _reject) => {
     Autodesk.Viewing.Initializer({ env: 'AutodeskProduction', getAccessToken }, () => {
       const config = {
-        extensions: ['Autodesk.DocumentBrowser'],
+        extensions: ['Autodesk.DocumentBrowser', 'AreaDetection'],
       };
       const viewer = new Autodesk.Viewing.GuiViewer3D(container, config);
       viewer.start();
