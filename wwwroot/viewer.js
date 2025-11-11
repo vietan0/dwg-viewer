@@ -89,6 +89,6 @@ export function loadModel(viewer, urn) {
       reject({ code, message, errors });
     }
     viewer.setLightPreset(0);
-    Autodesk.Viewing.Document.load(`urn: ${urn}`, onDocumentLoadSuccess, onDocumentLoadFailure);
+    Autodesk.Viewing.Document.load(`urn:${urn}`, onDocumentLoadSuccess, onDocumentLoadFailure);
   });
 }
