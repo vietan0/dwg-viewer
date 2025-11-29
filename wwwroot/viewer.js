@@ -1,5 +1,3 @@
-import { showSdd2Modal, showTemSddModal } from './modal.js';
-
 async function getAccessToken(callback) {
   try {
     const resp = await fetch('/api/auth/token');
@@ -70,57 +68,6 @@ export function initViewer(container) {
         viewer.impl.invalidate(true, true); // Force a refresh
       });
 
-      viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, () => {
-        const myDbids = viewer.getSelection();
-        for (const id of myDbids) {
-          viewer.getProperties(
-            id,
-            (obj) => {
-              if (obj.name.startsWith('TEM SDD')) {
-                const { externalId, properties } = obj;
-                const info = {
-                  externalId,
-                  name: properties.find((prop) => prop.displayName === 'LK').displayValue,
-                  area: properties.find((prop) => prop.displayName === 'S').displayValue,
-                  mdxd: properties.find((prop) => prop.displayName === '60').displayValue,
-                  minMax: properties.find((prop) => prop.displayName === '4').displayValue,
-                  hs: properties.find((prop) => prop.displayName === 'HS').displayValue,
-                };
-                showTemSddModal(info);
-              }
-
-              if (obj.name.startsWith('SDD2')) {
-                const { externalId, properties } = obj;
-                const info = {
-                  externalId,
-                  name: properties.find((prop) => prop.displayName === 'LK').displayValue,
-                  area: properties.find((prop) => prop.displayName === 'S').displayValue,
-                };
-                showSdd2Modal(info);
-              }
-            },
-            (err) => {
-              console.log(err);
-            },
-          );
-        }
-      });
-
-      viewer.addEventListener(Autodesk.Viewing.EXTENSION_LOADED_EVENT, (e) => {
-        if (e.extensionId === 'Autodesk.Measure') {
-          viewer.unloadExtension('Autodesk.Measure');
-        }
-        if (e.extensionId === 'Autodesk.DocumentBrowser') {
-          viewer.unloadExtension('Autodesk.DocumentBrowser');
-        }
-        if (e.extensionId === 'Autodesk.DefaultTools.NavTools') {
-          const navTools = viewer.toolbar.getControl('navTools');
-          if (navTools) {
-            navTools.removeControl('toolbar-zoomTool');
-            navTools.removeControl('toolbar-cameraSubmenuTool');
-          }
-        }
-      });
       resolve(viewer);
     });
   });
