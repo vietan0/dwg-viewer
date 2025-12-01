@@ -26,30 +26,83 @@ export function initViewer(container) {
       function createBufferGeometry() {
         const geometry = new THREE.BufferGeometry();
         const vertices = new Float32Array([
-          -1.0,
-          -1.0,
-          1.0, // v0
-          1.0,
-          -1.0,
-          1.0, // v1
-          1.0,
-          1.0,
-          1.0, // v2
-          1.0,
-          1.0,
-          1.0, // v3
-          -1.0,
-          1.0,
-          1.0, // v4
-          -1.0,
-          -1.0,
-          1.0, // v5
+          2,
+          2,
+          -1, // v0
+          3,
+          2,
+          -1, // v1
+          3,
+          4,
+          -1, // v2
+          3,
+          4,
+          -1, // v3
+          2,
+          4,
+          -1, // v4
+          2,
+          2,
+          -1, // v5
         ]);
         // itemSize = 3 because there are 3 values (components) per vertex
         geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
         const material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
         const mesh = new THREE.Mesh(geometry, material);
 
+        return mesh;
+      }
+
+      function createGeoLikeLand() {
+        const points = [
+          {
+            x: 1.838666127046963,
+            y: 3.6717783117419458,
+            z: -1,
+          },
+          {
+            x: 1.864315201004501,
+            y: 3.6336535112186539,
+            z: -1,
+          },
+          {
+            x: 1.898642468038361,
+            y: 3.6227277443540515,
+            z: -1,
+          },
+          {
+            x: 1.976441796829931,
+            y: 3.652226782460275,
+            z: -1,
+          },
+          {
+            x: 1.924467255123545,
+            y: 3.7294782336248318,
+            z: -1,
+          },
+          {
+            x: 1.83866613080454,
+            y: 3.6717783108215372,
+            z: -1,
+          },
+        ];
+        const shape = new THREE.Shape(points);
+        const bufferGeo = new THREE.BufferGeometry().fromGeometry(new THREE.ShapeGeometry(shape));
+        const material = new THREE.MeshBasicMaterial({
+          color: 0xff0000,
+          transparent: true,
+          opacity: 0.8,
+          depthWrite: true,
+          depthTest: true,
+        });
+
+        const pos = bufferGeo.getAttribute('position');
+        for (let i = 0; i < pos.count; i++) {
+          pos.setZ(i, -1);
+        }
+        pos.needsUpdate = true;
+
+        const mesh = new THREE.Mesh(bufferGeo, material);
         return mesh;
       }
 
@@ -65,6 +118,8 @@ export function initViewer(container) {
         const mesh = createBufferGeometry();
         mesh.dbId = 999999;
         modelBuilder.addMesh(mesh);
+        const meshLand = createGeoLikeLand();
+        modelBuilder.addMesh(meshLand);
         viewer.impl.invalidate(true, true); // Force a refresh
       });
 
